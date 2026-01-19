@@ -1,6 +1,6 @@
 {
-  "name": "ember-froala-editor",
-  "version": "3.2.6",
+  "name": "@coschedule/ember-froala-editor",
+  "version": "1.0.1",
   "description": "An ember-cli addon that properly wraps the Froala WYSIWYG Editor for use in Ember.js",
   "keywords": [
     "ember-addon",
@@ -18,6 +18,9 @@
   "homepage": "http://www.emberwysiwygeditor.com/",
   "bugs": "https://github.com/froala/ember-froala-editor/issues",
   "license": "MIT",
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
   "contributors": [
     "Ryan Panning",
     "Stefan Neculai",

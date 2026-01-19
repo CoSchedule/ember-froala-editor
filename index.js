@@ -68,7 +68,9 @@ module.exports = {
 
     // Build options by merging default options
     // with the apps ember-cli-build.js options
-    let options = Object.assign({}, this.defaultOptions, appOptions);
+    // Support both scoped and unscoped package names
+    let defaultOptions = this.defaultOptions || {};
+    let options = Object.assign({}, defaultOptions, appOptions);
 
     // When importing files, import from node_modules
     let nodePath = path.join('node_modules', 'froala-editor');
