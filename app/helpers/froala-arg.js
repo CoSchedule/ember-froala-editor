@@ -1,1 +1,1 @@
-export { default, froalaArg } from 'ember-froala-editor/helpers/froala-arg';
+export { default, froalaArg } from '@coschedule/ember-froala-editor/helpers/froala-arg';

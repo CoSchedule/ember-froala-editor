@@ -1,1 +1,1 @@
-export { default } from 'ember-froala-editor/components/froala-content';
+export { default } from '@coschedule/ember-froala-editor/components/froala-content';

@@ -1,4 +1,4 @@
 export {
   default,
   froalaMethod,
-} from 'ember-froala-editor/helpers/froala-method';
+} from '@coschedule/ember-froala-editor/helpers/froala-method';
