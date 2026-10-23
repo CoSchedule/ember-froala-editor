@@ -12,27 +12,28 @@ ember-froala-editor
 > ember app. Other functionality is also included to help interact with the
 > editor and content, see the [Usage](#Usage) section below.
 
-
 Compatibility
 ------------------------------------------------------------------------------
 
-* Ember.js v3.15 or above
-* Ember CLI v3.15 or above
-* Node.js v12, v14, or v16 and above
+- Ember.js v3.28 through v7.x (classic `ember-cli-build.js` builds)
+- Ember CLI v3.28 or above
+- ember-auto-import v2 with webpack 5 in the consuming app
+- Node.js v20.19 or above
 
 #### Note on Embroider compatibility
 
 Currently this addon is _not_ Ember Embroider compatible due to how Froala
-assest are imported into the build tree and does not use `ember-auto-import`.
-
+assets are imported into the build tree. `froala-editor` itself is loaded from
+the vendor build (not through `ember-auto-import`), so the configured plugins,
+languages and themes register on the same `FroalaEditor` that
+`import FroalaEditor from 'froala-editor'` returns.
 
 Installation
 ------------------------------------------------------------------------------
 
 ```
-ember install ember-froala-editor
+npm install @coschedule/ember-froala-editor
 ```
-
 
 Configuration
 ------------------------------------------------------------------------------
@@ -52,15 +53,14 @@ multiple. For example, to include a few languages, all plugins and one theme;
 // ember-cli-build.js
 // ... (snip)
 let app = new EmberAddon(defaults, {
-  'ember-froala-editor': {
-    languages: ['es','fr','de'],
-    plugins  : true,
-    themes   : 'royal'
-  }
+  "ember-froala-editor": {
+    languages: ["es", "fr", "de"],
+    plugins: true,
+    themes: "royal",
+  },
 });
 // ... (snip)
 ```
-
 
 Usage
 ------------------------------------------------------------------------------
@@ -86,14 +86,11 @@ function (setter) aspect. The `@content` must be a SafeString from
 [`htmlSafe`][14] and `@update` will also return a SafeString.
 
 ```hbs
-<FroalaEditor
-  @content={{this.content}}
-  @update={{fn (mut this.content)}}
-/>
+<FroalaEditor @content={{this.content}} @update={{fn (mut this.content)}} />
 ```
 
 The `@update` setter will be called on the [`contentChanged` editor event][9]
-by default. There *is* a slight debounce effect with that event, which may or
+by default. There _is_ a slight debounce effect with that event, which may or
 may not be desirable. To change which event is used, pass in the event name
 through the `@updateEvent` argument.
 
@@ -111,10 +108,7 @@ passed within the `@options` argument and individual argument, the individual
 argument will "win". In the example below, the theme would be "dark".
 
 ```hbs
-<FroalaEditor
-  @options={{hash theme="gray"}}
-  @theme="dark"
-/>
+<FroalaEditor @options={{hash theme="gray"}} @theme="dark" />
 ```
 
 [Event callbacks][8] can be passed into the component using the `@on-*` argument
@@ -152,7 +146,6 @@ is the equivalent to the `<textarea disabled>` attribute.
 />
 ```
 
-
 ### `<FroalaContent>` Component
 
 According to the [Froala Editor documentation][12], content created from the
@@ -162,7 +155,7 @@ is simply a component that applies the class. It can be used in either inline
 from the [`htmlSafe()`][14].
 
 ```hbs
-{{!-- this.content = htmlSafe('<p>Content here</p>') --}}
+{{! this.content = htmlSafe('<p>Content here</p>') }}
 <FroalaContent @content={{this.content}} />
 <FroalaContent>{{this.content}}</FroalaContent>
 ```
@@ -172,7 +165,6 @@ Either will render:
 ```html
 <div class="fr-view"><p>Content here</p></div>
 ```
-
 
 ### `{{froala-arg}}` Template Helper
 
@@ -200,7 +192,6 @@ function(editor, ...args) {}
 function(editor, clickEvent) {}
 ```
 
-
 ### `{{froala-html}}` Template Helper
 
 This helper creates a closure that will pass the editors current HTML/content
@@ -227,7 +218,6 @@ function(html, editor, ...args) {}
 function(html, editor, inputEvent) {}
 ```
 
-
 ### `{{froala-method}}` Template Helper
 
 This helper creates a closure that will call an [editor method][11] when
@@ -236,9 +226,7 @@ called. It is meant to replace an [event callback][8] on the
 first parameter of the helper.
 
 ```hbs
-<FroalaEditor
-  @on-paste-after={{froala-method "commands.undo"}}
-/>
+<FroalaEditor @on-paste-after={{froala-method "commands.undo"}} />
 ```
 
 The helpers first parameter will be used as the editor method to be called, and
@@ -264,11 +252,10 @@ In the above example, the "on-save-error" event callback would have received
 `(editor, error)`. In the `{{froala-method}}` helper we defined a "message"
 and told it to use the second argument, which is `error`.
 
-
 ### `{{html-safe}}` Template Helper
 
 Since the `<FroalaEditor>` requires that `@content` be a SafeString from
-[`htmlSafe()`][14], this helper can provide a way to convert a content *string*
+[`htmlSafe()`][14], this helper can provide a way to convert a content _string_
 when passing to the editor component. However, you should also sanitize the
 content going in to guard against XSS exploits.
 
@@ -276,15 +263,12 @@ Note: This helper is **NOT** automatically imported into the app. Rather,
 you must create your own helper to re-export the helper from this addon.
 
 1. `ember generate helper html-safe`
-2. Change `app/helpers/html-safe.js` to `export { default } from 'ember-froala-editor/helpers/html-safe';`
+2. Change `app/helpers/html-safe.js` to `export { default } from '@coschedule/ember-froala-editor/helpers/html-safe';`
 3. Use `{{html-safe}}` in your app templates
 
 ```hbs
-<FroalaEditor
-  @content={{html-safe this.content}}
-/>
+<FroalaEditor @content={{html-safe this.content}} />
 ```
-
 
 ### `{{to-string}}` Template Helper
 
@@ -298,7 +282,7 @@ Note: This helper is **NOT** automatically imported into the app. Rather,
 you must create your own helper to re-export the helper from this addon.
 
 1. `ember generate helper to-string`
-2. Change `app/helpers/to-string.js` to `export { default } from 'ember-froala-editor/helpers/to-string';`
+2. Change `app/helpers/to-string.js` to `export { default } from '@coschedule/ember-froala-editor/helpers/to-string';`
 3. Use `{{to-string}}` in your app templates
 
 ```hbs
@@ -308,7 +292,6 @@ you must create your own helper to re-export the helper from this addon.
 />
 ```
 
-
 ### `{{merged-hash}}` Template Helper
 
 This helper is a little out-of-scope for this addon, but can be very useful
@@ -316,9 +299,7 @@ when you need to use a combination of [`options`][7]. It allows you to use an
 object / hash property but also add others or override options. Ex:
 
 ```hbs
-<FroalaEditor
-  @options={{merged-hash this.parentOptions heightMin=400}}
-/>
+<FroalaEditor @options={{merged-hash this.parentOptions heightMin=400}} />
 ```
 
 The helper assumes all parameters are objects, and then uses [assign()][15] to
@@ -331,18 +312,22 @@ the "hash" (named parameters) being the final. So you can merge multiple
   this.applicationOptions
   this.routeOptions
   pastePlain=true
-  placeholderText="Only plain text can go here..."}}
+  placeholderText="Only plain text can go here..."
+}}
 ```
 
 Note: This helper is **NOT** automatically imported into the app. Rather,
 you must create your own helper to re-export the helper from this addon.
 
 1. `ember generate helper merged-hash`
-2. Change `app/helpers/merged-hash.js` to `export { default } from 'ember-froala-editor/helpers/merged-hash';`
+2. Change `app/helpers/merged-hash.js` to `export { default } from '@coschedule/ember-froala-editor/helpers/merged-hash';`
 3. Use `{{merged-hash}}` in your app templates
 
-
 ### `fillInFroalaEditor()` Test Helper
+
+Since 2.0 the test helpers are only available as named imports; the legacy
+global acceptance helpers (`registerHelper` / `registerAsyncHelper`) were
+removed from Ember.
 
 Test helper to best simulate content within the editor changing. It uses the
 [`fillIn()` helper provided by `ember-test-helpers`][22] but just ensures the
@@ -351,45 +336,46 @@ argument and HTML (string or [SafeString][14]) as the second argument. As an
 async function, you should `await` the results before continuing with your test.
 
 ```js
-import { fillInFroalaEditor } from 'ember-froala-editor/test-support';
-await fillInFroalaEditor('#editorId', '<p>HTML</p>');
+import { fillInFroalaEditor } from "@coschedule/ember-froala-editor/test-support";
+await fillInFroalaEditor("#editorId", "<p>HTML</p>");
 ```
-
 
 ### `getInFroalaEditor()` Test Helper
 
 Test helper that grabs the `innerHTML` of the editor content, simple as that.
-It returns the HTML as a string and *not* a SafeString, unlike `{{froala-html}}`.
+It returns the HTML as a string and _not_ a SafeString, unlike `{{froala-html}}`.
 
 ```js
-import { getInFroalaEditor } from 'ember-froala-editor/test-support';
-let content = getInFroalaEditor('#editorId');
+import { getInFroalaEditor } from "@coschedule/ember-froala-editor/test-support";
+let content = getInFroalaEditor("#editorId");
 ```
 
 So putting both of these test helpers together, an [Acceptance Test][18] might
 look something like this;
 
 ```js
-import { module, test } from 'qunit';
-import { visit } from '@ember/test-helpers';
-import { setupApplicationTest } from 'ember-qunit';
-import { fillInFroalaEditor, getInFroalaEditor } from 'ember-froala-editor/test-support';
+import { module, test } from "qunit";
+import { visit } from "@ember/test-helpers";
+import { setupApplicationTest } from "ember-qunit";
+import {
+  fillInFroalaEditor,
+  getInFroalaEditor,
+} from "@coschedule/ember-froala-editor/test-support";
 
-module('Acceptance | FroalaEditor', function(hooks) {
+module("Acceptance | FroalaEditor", function (hooks) {
   setupApplicationTest(hooks);
 
-  test('<FroalaEditor> properly updates when content is filled in', async function(assert) {
+  test("<FroalaEditor> properly updates when content is filled in", async function (assert) {
     assert.expect(2);
 
-    await visit('/');
-    assert.equal(getInFroalaEditor('#editor'), '<p>Foobar</p>');
+    await visit("/");
+    assert.equal(getInFroalaEditor("#editor"), "<p>Foobar</p>");
 
-    await fillInFroalaEditor('#editor', '<p>Foobaz</p>');
-    assert.equal(getInFroalaEditor('#editor'), '<p>Foobaz</p>');
+    await fillInFroalaEditor("#editor", "<p>Foobaz</p>");
+    assert.equal(getInFroalaEditor("#editor"), "<p>Foobaz</p>");
   });
 });
 ```
-
 
 Defaults for `<FroalaEditor>` component
 ------------------------------------------------------------------------------
@@ -407,22 +393,20 @@ The `<FroalaEditor>` first looks to your `config/environment.js` file for a
 place for your key after purchasing the Froala Editor.
 
 ```js
-'use strict';
+"use strict";
 
-module.exports = function(environment) {
+module.exports = function (environment) {
   var ENV = {
     // (other default code snipped...)
 
-    'ember-froala-editor': {
-      key: '_YOUR_KEY_HERE_'
-    }
-
+    "ember-froala-editor": {
+      key: "_YOUR_KEY_HERE_",
+    },
   };
   // ... (other default code snipped...)
   return ENV;
 };
 ```
-
 
 ### Extending `<FroalaEditor>` component
 
@@ -436,24 +420,28 @@ properties and methods.
 2. Change `app/components/froala-editor.js` to the example show below, where the editor is extended
 3. Add [options][7] to the `options = {}` object or individually
 4. Add [event callbacks][8] with the `on-eventName` naming strategy
-  * Note: Use the `@action` decorator to retain the component context
+
+- Note: Use the `@action` decorator to retain the component context
 
 ```js
 // app/components/froala-editor.js
-import FroalaEditorComponent from 'ember-froala-editor/components/froala-editor';
+import FroalaEditorComponent from "@coschedule/ember-froala-editor/components/froala-editor";
 
 export default class FroalaEditor extends FroalaEditorComponent {
   options = {
-    theme: "gray"
+    theme: "gray",
   };
   // OR
   theme = "gray";
 
-  'on-eventName'(editor, ...args) {/* this = editor */}
-  @action 'on-eventName'(editor, ...args) {/* this = component */}
+  "on-eventName"(editor, ...args) {
+    /* this = editor */
+  }
+  @action "on-eventName"(editor, ...args) {
+    /* this = component */
+  }
 }
 ```
-
 
 Custom Elements
 ------------------------------------------------------------------------------
@@ -469,17 +457,16 @@ in the Froala Editor docs.
 3. `FroalaEditor.DefineIcon()`, `FroalaEditor.RegisterCommand()`, etc.
 
 ```js
-import FroalaEditor from 'froala-editor';
+import FroalaEditor from "froala-editor";
 
 export function initialize(/* application */) {
-  FroalaEditor.RegisterCommand('myButton', {});
+  FroalaEditor.RegisterCommand("myButton", {});
 }
 
 export default {
-  initialize
+  initialize,
 };
 ```
-
 
 Upgrading from 3.x
 ------------------------------------------------------------------------------
@@ -488,18 +475,19 @@ No changes needed from an ember perspective. Installation and usage is still
 the same, but editor configuration options might have changed. See the Froala
 Editor docs for those details.
 
-
 FAQ
 ------------------------------------------------------------------------------
 
 #### Why can't I use the `{{on}}` modifier for Froala Editor events?
+
 Starting with Froala Editor v3, it no longer triggers custom events on the DOM.
 Instead, the new way is to pass callbacks into the `options.events` block,
 or use the `editor.events.on()` method. This is done for you with the
-`<FroalaEditor />` component by taking all  `@on-*` args and adding them
+`<FroalaEditor />` component by taking all `@on-*` args and adding them
 to the editor using the `editor.events.on()` method.
 
 #### Why can't I customize the editor `tagName`?
+
 With the move to Glimmer Components, the `tagName` is no longer customized
 through the component class. Rather, the forthcoming `(element)` helper
 will fill this need but it is not released in Ember.js proper yet. Once it is,
@@ -508,12 +496,14 @@ Just to note, the Froala Editor itself modifies the DOM quite a bit, so the
 emitted element might change anyway.
 
 #### Why can content be passed into `<FroalaEditor>` in block form?
+
 Content changes must be captured by the component to properly update the editor
 using `editor.html.set()` instead of through the Glimmer template. When content
 is passed in via block form (`<FroalaEditor>{{this.content}}</FroalaEditor>`)
 there is no way for the Glimmer component class to capture updates.
 
 #### Is there a way to enable two-way binding of `@content`?
+
 As of this writing, no. Ember Octane with Glimmer Components do not allow
 two-way bound `@arguments` whatsoever. However, there has been discussion
 on how to explicitly enable two-way binding in some manor, possibly by
@@ -522,6 +512,7 @@ this in mind, where the `@update` argument could look for a setter on
 `@content`, without needing to pass in the setter explicitly/separately.
 
 #### Why can't `@content` be a regular string anymore?
+
 There has been some debate on if the `<FroalaEditor>` itself should automatically
 display `@content` unescaped by applying [`htmlSafe()`][14]. Rather, the user
 of the component should indicate that the `@content` is Ok to display in its'
@@ -530,17 +521,16 @@ allow greater backwards compatibility without resorting to computeds. We can
 always go back on this decision but it was a good change to make at v3.
 
 #### Why is it recommended to depend upon a minor version and not major?
-Ex: `~3.0.0` instead of `^3.0.0`. Froala would like this addon (and other
-official integrations) to match versions of the main editor package. 
-Therefore, breaking changes with this addon will be at minor releases 
-(when there are any).
 
+Ex: `~3.0.0` instead of `^3.0.0`. Froala would like this addon (and other
+official integrations) to match versions of the main editor package.
+Therefore, breaking changes with this addon will be at minor releases
+(when there are any).
 
 Contributing
 ------------------------------------------------------------------------------
 
 See the [Contributing](CONTRIBUTING.md) guide for details.
-
 
 License
 ------------------------------------------------------------------------------
@@ -550,7 +540,6 @@ order to use Froala WYSIWYG HTML Editor plugin you must purchase a license for i
 
 Froala Editor has [3 different licenses](http://froala.com/wysiwyg-editor/pricing) for commercial use.
 For details please see [License Agreement](http://froala.com/wysiwyg-editor/terms).
-
 
 [1]: https://github.com/ember-cli/ember-cli
 [2]: https://www.froala.com/wysiwyg-editor
