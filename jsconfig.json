@@ -1,13 +1,7 @@
 {
   "compilerOptions": {
-    "target":"es2018",
-    "experimentalDecorators":true
+    "target": "es2018",
+    "experimentalDecorators": true
   },
-  "exclude":[
-    ".git",
-    "dist",
-    "node_modules",
-    "tmp",
-    "vendor"
-  ]
+  "exclude": [".git", "dist", "node_modules", "tmp", "vendor"]
 }
