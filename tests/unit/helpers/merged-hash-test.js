@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
-import { mergedHash } from 'ember-froala-editor/helpers/merged-hash';
+import { mergedHash } from '@coschedule/ember-froala-editor/helpers/merged-hash';
 
 module('Unit | Helper | merged-hash', function (hooks) {
   setupTest(hooks);
