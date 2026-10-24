@@ -1,12 +1,16 @@
-(function() {
+(function () {
   function vendorModule() {
     'use strict';
 
     return {
-      'default': self['FroalaEditor'],
+      default: self['FroalaEditor'],
       __esModule: true,
     };
   }
 
-  define('froala-editor', [], vendorModule);
+  // Classic builds have loader.js and get an importable `froala-editor` module. Embroider and Vite apps have no
+  // `define`, and resolve `froala-editor` themselves.
+  if (typeof define === 'function') {
+    define('froala-editor', [], vendorModule);
+  }
 })();
