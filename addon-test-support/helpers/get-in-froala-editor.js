@@ -1,9 +1,4 @@
-import { registerHelper } from '@ember/test';
 import { find } from '@ember/test-helpers';
-
-export default registerHelper('getInFroalaEditor', function (app, selector) {
-  return getInFroalaEditor(selector);
-});
 
 export function getInFroalaEditor(selector) {
   let element = find(`${selector} [contenteditable]`) || find(selector);

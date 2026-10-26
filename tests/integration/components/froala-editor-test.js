@@ -1,3 +1,4 @@
+/* eslint-disable ember/no-runloop -- these tests flip @disabled from inside Froala callbacks */
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { next } from '@ember/runloop';
@@ -11,7 +12,7 @@ import {
   waitUntil,
 } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
-import { fillInFroalaEditor } from 'ember-froala-editor/test-support';
+import { fillInFroalaEditor } from '@coschedule/ember-froala-editor/test-support';
 import FroalaEditor from 'froala-editor';
 
 module('Integration | Component | froala-editor', function (hooks) {
@@ -72,7 +73,7 @@ module('Integration | Component | froala-editor', function (hooks) {
     this.set('initializedCallback', (editor) => {
       editor.destroy();
       this.set('foo', foobaz);
-      assert.equal(this.element.textContent.trim(), 'Foobaz');
+      assert.strictEqual(this.element.textContent.trim(), 'Foobaz');
     });
 
     await render(hbs`
@@ -92,7 +93,7 @@ module('Integration | Component | froala-editor', function (hooks) {
 
     this.set('initializedCallback', (editor) => {
       this.set('foo', foobaz);
-      assert.equal(editor.html.get(), foobaz.toString());
+      assert.strictEqual(editor.html.get(), foobaz.toString());
     });
 
     await render(hbs`
@@ -116,7 +117,7 @@ module('Integration | Component | froala-editor', function (hooks) {
     });
 
     this.set('setFoo', (html) => {
-      assert.equal(html.toString(), foobaz.toString());
+      assert.strictEqual(html.toString(), foobaz.toString());
     });
 
     await render(hbs`
@@ -141,7 +142,7 @@ module('Integration | Component | froala-editor', function (hooks) {
     });
 
     this.set('setFoo', (html) => {
-      assert.equal(html.toString(), foobaz.toString());
+      assert.strictEqual(html.toString(), foobaz.toString());
     });
 
     await render(hbs`
@@ -168,7 +169,7 @@ module('Integration | Component | froala-editor', function (hooks) {
     });
 
     this.set('setFoo', (html) => {
-      assert.equal(html.toString(), foobaz.toString());
+      assert.strictEqual(html.toString(), foobaz.toString());
     });
 
     await render(hbs`
@@ -345,7 +346,7 @@ module('Integration | Component | froala-editor', function (hooks) {
 
     await waitUntil(() => editor !== null);
 
-    assert.equal(typeof editor.component, 'undefined');
+    assert.strictEqual(typeof editor.component, 'undefined');
   });
 
   test('initial @disabled state is applied', async function (assert) {

@@ -1,1 +1,1 @@
-export { default } from 'ember-froala-editor/helpers/to-string';
+export { default } from '@coschedule/ember-froala-editor/helpers/to-string';

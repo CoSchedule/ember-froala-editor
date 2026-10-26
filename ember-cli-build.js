@@ -4,22 +4,34 @@ const EmberAddon = require('ember-cli/lib/broccoli/ember-addon');
 
 module.exports = function (defaults) {
   let app = new EmberAddon(defaults, {
-    'ember-froala-editor': {
+    // Like the web app, use the vendor build (with its plugins) instead of a
+    // second webpack copy of froala-editor for imports in tests.
+    autoImport: {
+      exclude: ['froala-editor'],
+    },
+    '@coschedule/ember-froala-editor': {
+      // Same plugin list as the CoSchedule web app.
       plugins: [
         'align',
         'char_counter',
+        'code_beautifier',
+        'code_view',
         'colors',
-        'emoticons',
+        'draggable',
         'entities',
-        'font_family',
-        'font_size',
-        'line_breaker',
+        'file',
+        'fullscreen',
+        'image',
         'link',
         'lists',
         'paragraph_format',
+        'quick_insert',
+        'quote',
         'special_characters',
         'table',
         'url',
+        'video',
+        'word_paste',
       ],
       languages: false,
       themes: true,

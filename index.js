@@ -32,13 +32,13 @@ module.exports = {
       .for('ember-cli')
       .assertAbove(
         '3.14.3',
-        `${this.name}: Minimum ember-cli version is 3.15.0`
+        `${this.name}: Minimum ember-cli version is 3.15.0`,
       );
     checker
       .for('ember-source')
       .assertAbove(
         '3.14.3',
-        `${this.name}: Minimum ember.js version is 3.15.0`
+        `${this.name}: Minimum ember.js version is 3.15.0`,
       );
   }, // init()
 
@@ -62,7 +62,7 @@ module.exports = {
       this.ui.writeDeprecateLine(
         `${this.name}: The default value for the 'plugins' option has change from 'true' to 'false'. ` +
           `Please update '${this.name}.plugins' in 'ember-cli-build.js' to indicate which plugin(s) you need; ` +
-          'string = one plugin name, array = multiple plugin names, true = all plugins, false = no plugins.'
+          'string = one plugin name, array = multiple plugin names, true = all plugins, false = no plugins.',
       );
     }
 
@@ -92,7 +92,7 @@ module.exports = {
     let additionalAssets = [];
 
     // Import the other Froala Editor files (when requested)
-    if (options.plugins && options.plugins !== []) {
+    if (options.plugins) {
       additionalAssets.push({
         label: 'Plugin(s)',
         paths: [path.join('js', 'plugins'), path.join('js', 'third_party')],
@@ -107,7 +107,7 @@ module.exports = {
         optional: true,
       });
     }
-    if (options.languages && options.languages !== []) {
+    if (options.languages) {
       additionalAssets.push({
         label: 'Language(s)',
         paths: [path.join('js', 'languages')],
@@ -115,7 +115,7 @@ module.exports = {
         extension: '.js',
       });
     }
-    if (options.themes && options.themes !== []) {
+    if (options.themes) {
       additionalAssets.push({
         label: 'Themes(s)',
         paths: [path.join('css', 'themes')],
@@ -158,7 +158,7 @@ module.exports = {
           `${this.name}: ${asset.label} ` +
             'option in ember-cli-build.js is an invalid type, ' +
             'ensure it is either a boolean (all or none), ' +
-            'string (just one), or array (specific list)'
+            'string (just one), or array (specific list)',
         );
       }
 
@@ -168,7 +168,7 @@ module.exports = {
         if (
           !Object.prototype.hasOwnProperty.call(
             pathFiles,
-            file + asset.extension
+            file + asset.extension,
           )
         ) {
           missingFiles.push(file);
@@ -184,7 +184,7 @@ module.exports = {
         throw new Error(
           `${this.name}: ${asset.label} ` +
             'specified in ember-cli-build.js are missing, ' +
-            `make sure they are spelled correctly (${missingFiles.join(', ')})`
+            `make sure they are spelled correctly (${missingFiles.join(', ')})`,
         );
       }
     }); // additionalAssets.forEach()

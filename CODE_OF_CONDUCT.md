@@ -1,4 +1,4 @@
-The Ember team and community (*that's us*) are committed to everyone having a safe and inclusive experience.
+The Ember team and community (_that's us_) are committed to everyone having a safe and inclusive experience.
 
 **Our Community Guidelines / Code of Conduct can be found here**:
 

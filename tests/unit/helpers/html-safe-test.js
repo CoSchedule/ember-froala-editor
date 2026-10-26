@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
 import { isHTMLSafe } from '@ember/template';
-import { htmlSafe } from 'ember-froala-editor/helpers/html-safe';
+import { htmlSafe } from '@coschedule/ember-froala-editor/helpers/html-safe';
 
 module('Unit | Helper | html-safe', function (hooks) {
   setupTest(hooks);

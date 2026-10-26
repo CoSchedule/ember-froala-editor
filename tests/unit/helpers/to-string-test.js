@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
 import { htmlSafe } from '@ember/template';
-import { toString } from 'ember-froala-editor/helpers/to-string';
+import { toString } from '@coschedule/ember-froala-editor/helpers/to-string';
 
 module('Unit | Helper | to-string', function (hooks) {
   setupTest(hooks);

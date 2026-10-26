@@ -15,28 +15,24 @@ the request is alright too, it'll get the discussion rolling. There are no
 specific PR structure requirements at this point, however, we might change the
 commit message for clarification as needed.
 
-
 ### Development
 
-* `git clone` this repository (fork if you plan on submitting a PR)
-* `cd ember-froala-editor`
-* `npm install`
-
+- `git clone` this repository (fork if you plan on submitting a PR)
+- `cd ember-froala-editor`
+- `npm install`
 
 ### Running Docs Server
 
-* `ember server`
-* Visit the docs at http://localhost:4200
-
+- `ember server`
+- Visit the docs at http://localhost:4200
 
 ### Running Tests
 
-* `npm test` (Runs `ember try:each` to test against multiple Ember versions)
-* `ember test`
-* `ember test --server`
-* `ember server` (Visit tests at http://localhost:4200/tests)
+- `npm test` (Runs `ember try:each` to test against multiple Ember versions)
+- `ember test`
+- `ember test --server`
+- `ember server` (Visit tests at http://localhost:4200/tests)
 
-
-For more information on using ember-cli, visit 
+For more information on using ember-cli, visit
 [https://cli.emberjs.com/release/](https://cli.emberjs.com/release/) and/or
 [https://ember-cli.com/](https://ember-cli.com/).

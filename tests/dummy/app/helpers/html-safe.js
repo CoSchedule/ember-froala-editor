@@ -1,1 +1,1 @@
-export { default } from 'ember-froala-editor/helpers/html-safe';
+export { default } from '@coschedule/ember-froala-editor/helpers/html-safe';
